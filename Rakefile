@@ -413,7 +413,7 @@ def prompt_vmtype(type=nil)
     end
   end unless type
   $settings[:vmtype] = type
-  $settings[:vmname] = "Puppet #{type}"
+  $settings[:vmname] = 'ubuntu-12.04.1-pe-2.6.1'
 end
 
 def build_file(filename)
