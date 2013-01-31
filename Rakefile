@@ -13,7 +13,7 @@ VAGRANTDIR = "#{BUILDDIR}/vagrant"
 OVFDIR = "#{BUILDDIR}/ovf"
 VMWAREDIR = "#{BUILDDIR}/vmware"
 VBOXDIR = "#{BUILDDIR}/vbox"
-PEVERSION = '2.7.0'
+PEVERSION = '2.6.1'
 PE_RELEASE_URL = "https://s3.amazonaws.com/pe-builds/released/#{PEVERSION}"
 $settings = Hash.new
 
@@ -29,7 +29,7 @@ task :init do
   ['Debian','RedHat'].each do |vmtype|
     case vmtype
     when 'Debian'
-      pe_install_suffix = '-debian-6-i386'
+      pe_install_suffix = '-ubuntu-12.04-i386'
     when 'RedHat'
       pe_install_suffix = '-el-6-i386'
     end
@@ -123,10 +123,12 @@ task :createiso, [:vmtype] do |t,args|
     case $settings[:vmtype]
     when 'Debian'
       # Parse templates and output in BUILDDIR
-      $settings[:pe_install_suffix] = '-debian-6-i386'
+      $settings[:pe_install_suffix] = '-ubuntu-12.04-i386'
       $settings[:hostname] = "training.puppetlabs.vm"
       $settings[:pe_tarball] = "puppet-enterprise-#{PEVERSION}#{$settings[:pe_install_suffix]}.tar.gz"
       # No variables
+      build_file('lang')
+      build_file('txt.cfg')
       build_file('isolinux.cfg')
       #template_path = "#{BASEDIR}/#{$settings[:vmtype]}/#{filename}.erb"
       # Uses hostname, pe_install_suffix
@@ -134,6 +136,8 @@ task :createiso, [:vmtype] do |t,args|
 
       # Define ISO file targets
       files = {
+        "#{BUILDDIR}/Debian/lang"                       => '/isolinux/lang',
+        "#{BUILDDIR}/Debian/txt.cfg"                    => '/isolinux/txt.cfg',
         "#{BUILDDIR}/Debian/isolinux.cfg"               => '/isolinux/isolinux.cfg',
         "#{BUILDDIR}/Debian/preseed.cfg"                => '/puppet/preseed.cfg',
         "#{CACHEDIR}/puppet.git"                        => '/puppet/puppet.git',
@@ -141,7 +145,7 @@ task :createiso, [:vmtype] do |t,args|
         "#{CACHEDIR}/puppetlabs-training-bootstrap.git" => '/puppet/puppetlabs-training-bootstrap.git',
         "#{CACHEDIR}/#{$settings[:pe_tarball]}"                     => "/puppet/#{$settings[:pe_tarball]}",
       }
-      iso_glob = 'debian-*'
+      iso_glob = 'ubuntu-12.04.1-server*'
       iso_url = 'http://hammurabi.acc.umu.se/debian-cd/6.0.6/i386/iso-cd/debian-6.0.6-i386-CD-1.iso'
     when 'RedHat'
       # Parse templates and output in BUILDDIR
