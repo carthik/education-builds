@@ -14,6 +14,7 @@ OVFDIR = "#{BUILDDIR}/ovf"
 VMWAREDIR = "#{BUILDDIR}/vmware"
 VBOXDIR = "#{BUILDDIR}/vbox"
 PEVERSION = '3.0.0'
+OLDPEVERSION = '2.8.2'
 PE_RELEASE_URL = "https://s3.amazonaws.com/pe-builds/released/#{PEVERSION}"
 $settings = Hash.new
 
@@ -148,6 +149,7 @@ task :createiso, [:vmtype] do |t,args|
       $settings[:pe_install_suffix] = '-el-6-i386'
       $settings[:hostname] = "training.puppetlabs.vm"
       $settings[:pe_tarball] = "puppet-enterprise-#{PEVERSION}#{$settings[:pe_install_suffix]}.tar.gz"
+      $settings[:old_pe_tarball] = "puppet-enterprise-#{OLDPEVERSION}#{$settings[:pe_install_suffix]}.tar.gz"
       # No variables
       build_file('isolinux.cfg')
       # Uses hostname, pe_install_suffix
@@ -174,7 +176,8 @@ task :createiso, [:vmtype] do |t,args|
         "#{CACHEDIR}/puppet.git"                        => '/puppet/puppet.git',
         "#{CACHEDIR}/facter.git"                        => '/puppet/facter.git',
         "#{CACHEDIR}/puppetlabs-training-bootstrap.git" => '/puppet/puppetlabs-training-bootstrap.git',
-        "#{CACHEDIR}/#{$settings[:pe_tarball]}"                     => "/puppet/#{$settings[:pe_tarball]}",
+        "#{CACHEDIR}/#{$settings[:pe_tarball]}"         => "/puppet/#{$settings[:pe_tarball]}",
+        "#{CACHEDIR}/#{$settings[:old_pe_tarball]}"     => "/puppet/#{$settings[:old_pe_tarball]}",
       }
       iso_glob = 'CentOS-*'
       iso_url = 'http://mirror.tocici.com/centos/6.3/isos/i386/CentOS-6.3-i386-bin-DVD1.iso'
