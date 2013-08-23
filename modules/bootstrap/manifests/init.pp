@@ -21,6 +21,13 @@ class bootstrap ($print_console_login = false) {
     source  => 'puppet:///modules/bootstrap/emacs.d',
     recurse => true,
   }
+  file { '/root/.tmux.conf':
+    source => 'puppet:///modules/bootstrap/.tmux.conf',
+  }
+  file { '/root/.testing':
+    source  => 'puppet:///modules/boostrap/.testing',
+    recurse => true,
+  }
   file { '/root/.vim':
     ensure  => 'directory',
     source  => "/usr/src/puppet/ext/vim",
@@ -63,6 +70,10 @@ class bootstrap ($print_console_login = false) {
   }
   # Ensure tree is installed for fundamentals
   package { 'tree' :
+    ensure  => present,
+    require => Class['localrepo'],
+  }
+  package { 'tmux':
     ensure  => present,
     require => Class['localrepo'],
   }

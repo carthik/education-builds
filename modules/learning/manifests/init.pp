@@ -15,8 +15,7 @@ class learning {
     ensure => file,
     owner  => root,
     mode   => 0644,
-    content => "Welcome to the Learning Puppet VM! To learn how to write Puppet code, go to
-http://docs.puppetlabs.com/learning and follow along.
+    content => "Welcome to the Learning Puppet VM! 
 
 To view your current IP address, run `facter ipaddress_eth0`
 
@@ -28,5 +27,8 @@ https://<YOUR IP ADDRESS HERE>
 ",
   }
 
-
+  exec { 'install serverspec':
+    command => '/opt/puppet/bin/gem install serverspec',
+    creates => '/opt/puppet/bin/serverspec-init',
+  }
 }

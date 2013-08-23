@@ -20,7 +20,7 @@ VBOXDIR = "#{BUILDDIR}/vbox"
 # then,
 # Edit the PEVERSION to something like:
 # PEVERSION = '3.0.1-rc0-58-g9275a0f'
-PEVERSION = '3.0.0'
+PEVERSION = '3.0.1'
 PE_RELEASE_URL = "https://s3.amazonaws.com/pe-builds/released/#{PEVERSION}"
 $settings = Hash.new
 
