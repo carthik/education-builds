@@ -22,10 +22,10 @@ class bootstrap ($print_console_login = false) {
     recurse => true,
   }
   file { '/root/.tmux.conf':
-    source => 'puppet:///modules/bootstrap/.tmux.conf',
+    source => 'puppet:///modules/bootstrap/tmux.conf',
   }
   file { '/root/.testing':
-    source  => 'puppet:///modules/boostrap/.testing',
+    source  => 'puppet:///modules/boostrap/testing',
     recurse => true,
   }
   file { '/root/.vim':
