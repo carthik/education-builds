@@ -7,6 +7,7 @@ class advanced::classroom {
 
   # console fixes for Safari
   include advanced::classroom::console
+  include advanced::classroom::auth_conf
 
   # This wonkiness is due to the fact that puppet_enterprise::license class
   # manages this file only if it exists on the master. So we do the opposite.
